@@ -27,7 +27,7 @@ VALUES
 (19,'kanataleisurecentre','Kanata Leisure Centre and Wave Pool','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/kanata-leisure-centre-and-wave-pool','70 Aird Place Ottawa ON K2L 4C9 Canada','613-580-9677','klc@ottawa.ca',-75.8991940000,45.3114250000),
 (20,'kanatarecreationcomplex','Kanata Recreation Complex','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/kanata-recreation-complex','100 Charlie Rogers Place Ottawa ON K2V 1A2 Canada','613-580-2570','krc@ottawa.ca',-75.9017640000,45.2942620000),
 (21,'lansdowne','Lansdowne Park','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/lansdowne-park','1525 Princess Patricia Ottawa ON K1S 5J3 Canada','613-580-2429','sports@ottawa.ca',-75.6823840000,45.4008330000),
-(22,'larryrobinson','Larry Robinson Arena','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/larry-robinson-arena','2785 8th Line Ottawa ON K0A 2P0 Canada','613-580-2424','osgooderideaurecreation@ottawa.ca',-75.4688320000,45.2297880000),
+(22,'larryrobinson','Metcalfe Community Centre and Larry Robinson Arena','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/larry-robinson-arena','2785 8th Line Ottawa ON K0A 2P0 Canada','613-580-2424','osgooderideaurecreation@ottawa.ca',-75.4688320000,45.2297880000),
 (23,'loiskemp','Lois Kemp Arena','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/lois-kemp-arena-blackburn','200 Glen Park Drive Ottawa ON K1B 5A3 Canada','613-824-5197','eastendfacilities@ottawa.ca',-75.5631810000,45.4303720000),
 (24,'lowertown','Lowertown Pool','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/lowertown-pool','40 Cobourg Street Ottawa ON K1N 8Z6 Canada','613-580-2092','lowertown@ottawa.ca',-75.6815040000,45.4342760000),
 (25,'manotick','Manotick Community Centre','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/manotick-community-centre','5572 Doctor Leach Drive Ottawa ON K4M 1L7 Canada','613-580-2424','osgooderideaurecreation@ottawa.ca',-75.6864760000,45.2219710000),
@@ -47,10 +47,14 @@ VALUES
 (39,'sawmillcreek','Sawmill Creek Community Centre and Pool','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/sawmill-creek-community-centre-and-pool','3380 D\'Aoust Avenue Ottawa ON K1T 1R5 Canada','613-521-4092','sawmill@ottawa.ca',-75.6355960000,45.3505810000),
 (40,'splash','Splash Wave Pool','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/splash-wave-pool','2040 Ogilvie Road Ottawa ON K1J 7N8 Canada','613-748-4222','infosplash@ottawa.ca',-75.6002930000,45.4376600000),
 (41,'stlaurent','St-Laurent Complex','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/st-laurent-complex','525 Côté Street Ottawa ON K1K 0Z8 Canada','613-742-6767','stlaurentcomplex@ottawa.ca',-75.6471590000,45.4364730000),
-(42,'stuartholmes','Stuart Holmes Arena','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/stuart-holmes-arena','5660 Osgoode Main Street Ottawa ON K0A 2W0 Canada','613-580-2424','osgooderideaurecreation@ottawa.ca',-75.6017830000,45.1474790000),
+(42,'stuartholmes','Osgoode Community Centre and Stuart Holmes Arena','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/stuart-holmes-arena','5660 Osgoode Main Street Ottawa ON K0A 2W0 Canada','613-580-2424','osgooderideaurecreation@ottawa.ca',-75.6017830000,45.1474790000),
 (43,'tombrown','Tom Brown Arena','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/tom-brown-arena','141 Bayview Road Ottawa ON K1Y 4M3 Canada','613-580-2666','publicskating@ottawa.ca',-75.7226680000,45.4080660000),
 (44,'werskinejohnston','W. Erskine Johnston Arena','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/w-erskine-johnston-arena','3832 Carp Road Ottawa ON K0A 1L0 Canada','613-839-3000','sports@ottawa.ca',-76.0388030000,45.3490710000),
-(45,'walterbaker','Walter Baker Sports Centre','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/walter-baker-sports-centre','100 Malvern Drive Ottawa ON K2J 2G5 Canada','613-580-2788','wbsc@ottawa.ca',-75.7614100000,45.2804350000);
+(45,'walterbaker','Walter Baker Sports Centre','https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/walter-baker-sports-centre','100 Malvern Drive Ottawa ON K2J 2G5 Canada','613-580-2788','wbsc@ottawa.ca',-75.7614100000,45.2804350000),
+(46,'patclark', 'Pat Clark Community Centre', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/pat-clark-community-centre', '4355 Halmont Drive Ottawa ON K1J 8W6 Canada', '613-748-1771','patclark@ottawa.ca', -75.619733, 45.428839),
+(47,'jackcharron', 'Jack Charron Arena', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/jack-charron-arena', '10 McKitrick Drive Ottawa ON K2L 1T7 Canada', '613-580-2424', 'sports@ottawa.ca', -75.883951, 45.293582),
+(48,'richelieu', 'Richelieu Vanier Community Centre', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/richelieu-vanier-community-centre', '300 Des Pères-Blancs Avenue Ottawa ON K1L 7L5 Canada', '613-560-6030', 'richelieu-vanier@ottawa.ca', -75.660535, 45.444374),
+(49,'southfallingbrook', 'South Fallingbrook Community Centre', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/south-fallingbrook-community-centre', '998 Valin Street Ottawa ON K4A 4B5 Canada', '613-824-0633', 'sfcc-ccfs@ottawa.ca', -75.461705, 45.470951);
 UNLOCK TABLES;
 
 --
@@ -114,7 +118,11 @@ VALUES
 ('slc',41),
 ('splash',40),
 ('stlaurentarena',41),
-('walterbaker',45);
+('walterbaker',45),
+('patclarkcc',46),
+('arenajackcharron',47),
+('richelieuvanier',48),
+('southfallingbrook',49);
 UNLOCK TABLES;
 
 --
@@ -367,7 +375,9 @@ VALUES
 (171,'Public Skating',34),
 (172,'Speed Skating',35),
 (173,'Indoor Skateboarding',36),
-(174,'Rollerskating',47);
+(174,'Rollerskating',47),
+(175,'Basketball - Family',18),
+(176,'Pickleball - 16+',21);
 UNLOCK TABLES;
 
 --
@@ -806,5 +816,16 @@ VALUES
 (45,56),
 (45,65),
 (45,80),
-(45,171);
+(45,171),
+(46,175),
+(46,153),
+(46,105),
+(46,79),
+(47,168),
+(47,171),
+(48,127),
+(49,126),
+(49,176),
+(49,92),
+(49,105);
 UNLOCK TABLES;

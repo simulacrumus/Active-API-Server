@@ -4,8 +4,11 @@ import com.example.active.business.domain.FacilityDTO;
 import com.example.active.business.service.FacilityService;
 import com.example.active.data.entity.Facility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -18,13 +21,14 @@ public class FacilityController {
     private final String DEFAULT_FACILITY_SORT_OPTION = "title";
     @Autowired
     private FacilityService facilityService;
-
+    @Autowired
+    private ApiKeyAuthenticator apiKeyAuthenticator;
     @RequestMapping(value = "",
             method = RequestMethod.GET,
             produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public List<FacilityDTO> getFacilities(
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             @RequestParam(name = "lng") Double lng,
             @RequestParam(name = "lat") Double lat,
@@ -41,7 +45,7 @@ public class FacilityController {
     @ResponseStatus(HttpStatus.OK)
     public Optional<FacilityDTO> getFacilityByKey(
             @PathVariable("id") String key,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "lng") Double lng,
             @RequestParam(name = "lat") Double lat,
             HttpServletRequest request,
@@ -63,12 +67,15 @@ public class FacilityController {
             HttpServletResponse response,
             @RequestBody Facility facility
     ){
+        if(!apiKeyAuthenticator.isAuthenticated(apiKey)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You cannot consume this service. Please check your api key");
+        }
         facilityService.save(facility);
     }
 
     @RequestMapping(value = "/{id}",
             method = RequestMethod.DELETE,
-            produces = {"application/json"})
+            consumes = {"*/*"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFacility(
             @PathVariable("id") Long id,
@@ -76,6 +83,13 @@ public class FacilityController {
             HttpServletRequest request,
             HttpServletResponse response
     ){
-        facilityService.deleteFacility(id);
+        if(!apiKeyAuthenticator.isAuthenticated(apiKey)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You cannot consume this service. Please check your api key");
+        }
+        try{
+            facilityService.deleteFacility(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("No facility found with id %d", id));
+        }
     }
 }

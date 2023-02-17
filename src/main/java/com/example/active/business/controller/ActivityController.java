@@ -8,13 +8,16 @@ import com.example.active.data.entity.Activity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,9 @@ public class ActivityController {
     private final String DEFAULT_ACTIVITY_SORT_OPTION = "time";
     private final String DEFAULT_LONGITUDE = "-75.68954";
     private final String DEFAULT_LATITUDE = "45.42001";
+
+    @Autowired
+    private ApiKeyAuthenticator apiKeyAuthenticator;
     @Autowired
     private FacilityService facilityService;
     @Autowired
@@ -39,7 +45,7 @@ public class ActivityController {
             produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public Page<ActivityDTO> getActivities(
-        @RequestParam(name = "key") String apiKey,
+        @RequestParam(name = "key", required = false) String apiKey,
         @RequestParam(name = "q", defaultValue = "") String query,
         @RequestParam(name = "available") Optional<Boolean> isAvailable,
         @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
@@ -62,7 +68,7 @@ public class ActivityController {
     @ResponseStatus(HttpStatus.OK)
     public Optional<ActivityDTO> getActivityById(
             @PathVariable("id") Long id,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
             @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
             HttpServletRequest request,
@@ -79,7 +85,7 @@ public class ActivityController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ActivityDTO> getActivitiesByCategory(
             @PathVariable("category") String category,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
             @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
@@ -103,7 +109,7 @@ public class ActivityController {
     public Page<ActivityDTO> getActivitiesByCategoryAndType(
             @PathVariable("category") String category,
             @PathVariable("type") String type,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
             @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
@@ -128,7 +134,7 @@ public class ActivityController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ActivityDTO> getActivitiesByType(
             @PathVariable("type") String type,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
             @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
@@ -149,7 +155,7 @@ public class ActivityController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ActivityDTO> getActivitiesByFacility(
             @PathVariable("facility") String facility,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
             @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
@@ -171,7 +177,7 @@ public class ActivityController {
     public Page<ActivityDTO> getActivitiesByFacilityAndCategory(
             @PathVariable("facility") String facility,
             @PathVariable("category") String category,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
             @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
@@ -194,7 +200,7 @@ public class ActivityController {
             @PathVariable("facility") String facility,
             @PathVariable("category") String category,
             @PathVariable("type") String type,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
             @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
@@ -216,7 +222,7 @@ public class ActivityController {
     public Page<ActivityDTO> getActivitiesByFacilityAndType(
             @PathVariable("facility") String facility,
             @PathVariable("type") String type,
-            @RequestParam(name = "key") String apiKey,
+            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
             @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
@@ -260,14 +266,16 @@ public class ActivityController {
             HttpServletResponse response,
             @RequestBody Activity activity
     ){
+        if(!apiKeyAuthenticator.isAuthenticated(apiKey)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You cannot consume this service. Please check your api key");
+        }
         activityService.saveActivity(activity);
     }
 
     @RequestMapping(
             value = "/activities/{id}",
             method = RequestMethod.DELETE,
-            produces = {"application/json"},
-            consumes = {"application/json"}
+            consumes = {"*/*"}
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteActivity(
@@ -276,6 +284,13 @@ public class ActivityController {
             HttpServletRequest request,
             HttpServletResponse response
     ){
-        activityService.deleteActivity(id);
+        if(!apiKeyAuthenticator.isAuthenticated(apiKey)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You cannot consume this service. Please check your api key");
+        }
+        try{
+            activityService.deleteActivity(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("No activity found with id %d", id));
+        }
     }
 }
