@@ -10,7 +10,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -18,6 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/v1/types")
 public class TypeController {
+
+    private final String DEFAULT_TYPE_SORT_OPTION = "title";
     @Autowired
     private TypeService typeService;
     @Autowired
@@ -29,30 +30,12 @@ public class TypeController {
             produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public List<TypeDTO> getTypes(
-            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
-            @RequestParam(name = "sort") String sort,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_TYPE_SORT_OPTION) String sort,
             HttpServletRequest request,
             HttpServletResponse response
     ){
         return typeService.findAll(query, sort);
-    }
-
-    @RequestMapping(value = "/{type}/facilities",
-            method = RequestMethod.GET,
-            produces = {"application/json"})
-    @ResponseStatus(HttpStatus.OK)
-    public List<FacilityDTO> getFacilitiesByType(
-            @PathVariable("type") String type,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "sort") String sort,
-            @RequestParam(name = "q", defaultValue = "") String query,
-            @RequestParam(name = "lng") Double lng,
-            @RequestParam(name = "lat") Double lat,
-            HttpServletRequest request,
-            HttpServletResponse response
-    ){
-        return facilityService.findByType(query, type, sort, lat, lng);
     }
 
     @RequestMapping(
@@ -69,7 +52,7 @@ public class TypeController {
             @RequestBody Type type
     ){
         if(!apiKeyAuthenticator.isAuthenticated(apiKey)){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You cannot consume this service. Please check your api key");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You cannot consume this service. Please check your API Key");
         }
         typeService.save(type);
     }

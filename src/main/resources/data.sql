@@ -54,7 +54,9 @@ VALUES
 (46,'patclark', 'Pat Clark Community Centre', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/pat-clark-community-centre', '4355 Halmont Drive Ottawa ON K1J 8W6 Canada', '613-748-1771','patclark@ottawa.ca', -75.619733, 45.428839),
 (47,'jackcharron', 'Jack Charron Arena', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/jack-charron-arena', '10 McKitrick Drive Ottawa ON K2L 1T7 Canada', '613-580-2424', 'sports@ottawa.ca', -75.883951, 45.293582),
 (48,'richelieu', 'Richelieu Vanier Community Centre', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/richelieu-vanier-community-centre', '300 Des Pères-Blancs Avenue Ottawa ON K1L 7L5 Canada', '613-560-6030', 'richelieu-vanier@ottawa.ca', -75.660535, 45.444374),
-(49,'southfallingbrook', 'South Fallingbrook Community Centre', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/south-fallingbrook-community-centre', '998 Valin Street Ottawa ON K4A 4B5 Canada', '613-824-0633', 'sfcc-ccfs@ottawa.ca', -75.461705, 45.470951);
+(49,'southfallingbrook', 'South Fallingbrook Community Centre', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/south-fallingbrook-community-centre', '998 Valin Street Ottawa ON K4A 4B5 Canada', '613-824-0633', 'sfcc-ccfs@ottawa.ca', -75.461705, 45.470951),
+(50,'jimtubman', 'Jim Tubman Chevrolet Rink', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/jim-tubman-chevrolet-rink', '2185 Arch Street Ottawa ON K1G 2H5 Canada','613-580-3600','jtcrink@ottawa.ca', -75.630230 ,45.391020),
+(51, 'overbrook', 'Overbrook Community Centre', 'https://ottawa.ca/en/recreation-and-parks/recreation-facilities/facility-listing/overbrook-community-centre','33 Quill St Ottawa ON K1K 1S3 Canada', '613-742-5147', 'overbrook@ottawa.ca', -75.656808, 45.425531);
 UNLOCK TABLES;
 
 --
@@ -122,7 +124,9 @@ VALUES
 ('patclarkcc',46),
 ('arenajackcharron',47),
 ('richelieuvanier',48),
-('southfallingbrook',49);
+('southfallingbrook',49),
+('jimtubmanrink',50),
+('overbrookcc',51);
 UNLOCK TABLES;
 
 --
@@ -192,7 +196,8 @@ VALUES
 (45,'drumsalive','Drums Alive',2),
 (46,'walkingclub','Walking Club',2),
 (47,'rollerskating','Rollerskating',4),
-(48,'nordicwalking','Nordic Walking',2);
+(48,'nordicwalking','Nordic Walking',2),
+(49,'rinngette', 'Ringette',3);
 UNLOCK TABLES;
 
 --
@@ -377,7 +382,23 @@ VALUES
 (173,'Indoor Skateboarding',36),
 (174,'Rollerskating',47),
 (175,'Basketball - Family',18),
-(176,'Pickleball - 16+',21);
+(176,'Pickleball - 16+',21),
+(177,'Indoor Skateboarding - Women and Girls',36),
+(178,'Pickeball - 16+', 21),
+(179,'Cardio & Strength',10),
+(180,'Aquafit General Deep',8),
+(181,'Aquafit General Shallow',8),
+(182,'Aquafit Lite Main Pool',8),
+(183,'Hockey - 50+',20),
+(184,'Hockey - Child',20),
+(185,'Hockey - Adult',20),
+(186,'Hockey - Family',20),
+(187,'Hockey - Youth',20),
+(188,'Hockey - Women',20),
+(189,'Ringette - Child',49),
+(190,'Ringette - Adult',49),
+(191,'Ringette - Youth',49),
+(192,'Soccer - Adult',25);
 UNLOCK TABLES;
 
 --
@@ -567,6 +588,7 @@ VALUES
 (19,17),
 (19,18),
 (19,51),
+(19,179),
 (20,116),
 (20,117),
 (20,168),
@@ -810,6 +832,9 @@ VALUES
 (45,8),
 (45,29),
 (45,32),
+(45,180),
+(45,181),
+(45,182),
 (45,42),
 (45,50),
 (45,55),
@@ -825,7 +850,21 @@ VALUES
 (47,171),
 (48,127),
 (49,126),
-(49,176),
+(49,178),
 (49,92),
-(49,105);
+(49,105),
+(50,183),
+(50,184),
+(50,185),
+(50,186),
+(50,187),
+(50,188),
+(50,189),
+(50,190),
+(50,191),
+(50,171),
+(51,192),
+(51,90),
+(51,125),
+(51,100);
 UNLOCK TABLES;

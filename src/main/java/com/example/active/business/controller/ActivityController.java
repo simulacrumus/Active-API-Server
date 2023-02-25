@@ -17,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +28,8 @@ public class ActivityController {
     private final String DEFAULT_NUM_OF_RESULTS_PER_PAGE = "20";
     private final String DEFAULT_PAGE_NUMBER = "0";
     private final String DEFAULT_ACTIVITY_SORT_OPTION = "time";
-    private final String DEFAULT_LONGITUDE = "-75.68954";
-    private final String DEFAULT_LATITUDE = "45.42001";
+    private final String DEFAULT_OTTAWA_LONGITUDE = "-75.68954";
+    private final String DEFAULT_OTTAWA_LATITUDE = "45.42001";
 
     @Autowired
     private ApiKeyAuthenticator apiKeyAuthenticator;
@@ -45,14 +44,13 @@ public class ActivityController {
             produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public Page<ActivityDTO> getActivities(
-        @RequestParam(name = "key", required = false) String apiKey,
         @RequestParam(name = "q", defaultValue = "") String query,
         @RequestParam(name = "available") Optional<Boolean> isAvailable,
-        @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-        @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
-        @RequestParam(name = "sort", defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
-        @RequestParam(name = "page", defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
-        @RequestParam(name = "size", defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
+        @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+        @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+        @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
+        @RequestParam(name = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+        @RequestParam(name = "size", required = false, defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
         HttpServletRequest request,
         HttpServletResponse response
     ){
@@ -68,9 +66,8 @@ public class ActivityController {
     @ResponseStatus(HttpStatus.OK)
     public Optional<ActivityDTO> getActivityById(
             @PathVariable("id") Long id,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-            @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
             HttpServletRequest request,
             HttpServletResponse response
     ){
@@ -85,14 +82,13 @@ public class ActivityController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ActivityDTO> getActivitiesByCategory(
             @PathVariable("category") String category,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
-            @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-            @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
-            @RequestParam(name = "sort", defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
-            @RequestParam(name = "page", defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
+            @RequestParam(name = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
             HttpServletRequest request,
             HttpServletResponse response
     ){
@@ -109,14 +105,13 @@ public class ActivityController {
     public Page<ActivityDTO> getActivitiesByCategoryAndType(
             @PathVariable("category") String category,
             @PathVariable("type") String type,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
-            @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-            @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
-            @RequestParam(name = "sort", defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
-            @RequestParam(name = "page", defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
+            @RequestParam(name = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
             HttpServletRequest request,
             HttpServletResponse response
     ){
@@ -134,14 +129,13 @@ public class ActivityController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ActivityDTO> getActivitiesByType(
             @PathVariable("type") String type,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
-            @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-            @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
-            @RequestParam(name = "sort", defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
-            @RequestParam(name = "page", defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
+            @RequestParam(name = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
             HttpServletRequest request,
             HttpServletResponse response
     ){
@@ -155,14 +149,13 @@ public class ActivityController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ActivityDTO> getActivitiesByFacility(
             @PathVariable("facility") String facility,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
-            @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-            @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
-            @RequestParam(name = "sort", defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
-            @RequestParam(name = "page", defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
+            @RequestParam(name = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
             HttpServletRequest request,
             HttpServletResponse response
     ){
@@ -177,14 +170,13 @@ public class ActivityController {
     public Page<ActivityDTO> getActivitiesByFacilityAndCategory(
             @PathVariable("facility") String facility,
             @PathVariable("category") String category,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
-            @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-            @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
-            @RequestParam(name = "sort", defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
-            @RequestParam(name = "page", defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
+            @RequestParam(name = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
             HttpServletRequest request,
             HttpServletResponse response
     ){
@@ -200,14 +192,13 @@ public class ActivityController {
             @PathVariable("facility") String facility,
             @PathVariable("category") String category,
             @PathVariable("type") String type,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
-            @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-            @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
-            @RequestParam(name = "sort", defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
-            @RequestParam(name = "page", defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
+            @RequestParam(name = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
             HttpServletRequest request,
             HttpServletResponse response
     ){
@@ -222,14 +213,13 @@ public class ActivityController {
     public Page<ActivityDTO> getActivitiesByFacilityAndType(
             @PathVariable("facility") String facility,
             @PathVariable("type") String type,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "q", defaultValue = "") String query,
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
             @RequestParam(name = "available") Optional<Boolean> isAvailable,
-            @RequestParam(name = "lng", defaultValue = DEFAULT_LONGITUDE) Double lng,
-            @RequestParam(name = "lat", defaultValue = DEFAULT_LATITUDE) Double lat,
-            @RequestParam(name = "sort", defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
-            @RequestParam(name = "page", defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
-            @RequestParam(name = "size", defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_ACTIVITY_SORT_OPTION) String sort,
+            @RequestParam(name = "page", required = false, defaultValue = DEFAULT_PAGE_NUMBER) Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = DEFAULT_NUM_OF_RESULTS_PER_PAGE) Integer size,
             HttpServletRequest request,
             HttpServletResponse response
     ){

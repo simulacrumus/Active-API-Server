@@ -15,23 +15,24 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/v1/facilities")
+@RequestMapping(value = "/api/v1")
 public class FacilityController {
 
     private final String DEFAULT_FACILITY_SORT_OPTION = "title";
+    private final String DEFAULT_OTTAWA_LONGITUDE = "-75.68954";
+    private final String DEFAULT_OTTAWA_LATITUDE = "45.42001";
     @Autowired
     private FacilityService facilityService;
     @Autowired
     private ApiKeyAuthenticator apiKeyAuthenticator;
-    @RequestMapping(value = "",
+    @RequestMapping(value = "/facilities",
             method = RequestMethod.GET,
             produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public List<FacilityDTO> getFacilities(
-            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
-            @RequestParam(name = "lng") Double lng,
-            @RequestParam(name = "lat") Double lat,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
             @RequestParam(name = "sort", defaultValue = DEFAULT_FACILITY_SORT_OPTION) String sort,
             HttpServletRequest request,
             HttpServletResponse response
@@ -39,23 +40,42 @@ public class FacilityController {
         return facilityService.findAll(query, sort, lat, lng);
     }
 
-    @RequestMapping(value = "/{id}",
+    @RequestMapping(value = "/facilities/{id}",
             method = RequestMethod.GET,
             produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public Optional<FacilityDTO> getFacilityByKey(
             @PathVariable("id") String key,
-            @RequestParam(name = "key", required = false) String apiKey,
-            @RequestParam(name = "lng") Double lng,
-            @RequestParam(name = "lat") Double lat,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
             HttpServletRequest request,
             HttpServletResponse response
     ){
         return facilityService.findByKey(key, lat, lng);
     }
 
+    @RequestMapping(value = "/types/{type}/facilities",
+            method = RequestMethod.GET,
+            produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<FacilityDTO> getFacilitiesByType(
+            @PathVariable("type") String type,
+            @RequestParam(name = "sort", required = false, defaultValue = DEFAULT_FACILITY_SORT_OPTION) String sort,
+            @RequestParam(name = "q", required = false, defaultValue = "") String query,
+            @RequestParam(name = "lng", required = false, defaultValue = DEFAULT_OTTAWA_LONGITUDE) Double lng,
+            @RequestParam(name = "lat", required = false, defaultValue = DEFAULT_OTTAWA_LATITUDE) Double lat,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
+        try{
+            return facilityService.findByType(query, type, sort, lat, lng);
+        }catch (IllegalArgumentException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid sort option");
+        }
+    }
+
     @RequestMapping(
-            value = "",
+            value = "/facilities",
             method = RequestMethod.POST,
             produces = {"application/json"},
             consumes = {"application/json"}
@@ -73,7 +93,7 @@ public class FacilityController {
         facilityService.save(facility);
     }
 
-    @RequestMapping(value = "/{id}",
+    @RequestMapping(value = "/facilities/{id}",
             method = RequestMethod.DELETE,
             consumes = {"*/*"})
     @ResponseStatus(HttpStatus.NO_CONTENT)

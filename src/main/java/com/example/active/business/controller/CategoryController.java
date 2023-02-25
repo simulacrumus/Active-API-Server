@@ -31,7 +31,6 @@ public class CategoryController {
     )
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryDTO> getCategories(
-            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             HttpServletRequest request,
             HttpServletResponse response
@@ -47,7 +46,6 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.OK)
     public Optional<CategoryDTO> getCategoryById(
             @PathVariable("id") Long id,
-            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             HttpServletRequest request,
             HttpServletResponse response
@@ -62,7 +60,6 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryDTO> getCategoriesByFacility(
             @PathVariable("facility") String facility,
-            @RequestParam(name = "key", required = false) String apiKey,
             @RequestParam(name = "q", defaultValue = "") String query,
             HttpServletRequest request,
             HttpServletResponse response
